@@ -24,11 +24,13 @@ class WebCrawler:
         print("__init__()")
         self.driver = driver
 
+    # opens a url and waits until it is loaded
     def open_url(self, url: str, load_time: float = 5):
         self.driver.get(url)
         if load_time > 0:
             sleep(load_time)
 
+    # returns true if the bottom of the scrollbox selected using the passed by_identifier_dictwas reached
     def scroll_to_bottom_by(self, reload_time: float = 1, **by_identifier_dict) -> bool:
         print(type(by_identifier_dict))
         print(f'scroll_to_bottom_by -> (reload_time={reload_time})')
@@ -47,6 +49,7 @@ class WebCrawler:
             print(f'failed to scroll to bottom => {ex}')
         return False
 
+    # returns true if an item could be found using the passed by_identifier_dict
     def find_item_by(self, **by_identifier_dict) -> bool:
         print(f'find_item_by')
         try:
@@ -56,6 +59,7 @@ class WebCrawler:
             print(f'failed to find item => {ex}')
         return False
 
+    # returns true if one or more items could be found using the passed by_identifier_dict
     def find_items_by(self, **by_identifier_dict) -> bool:
         print(f'find_items_by')
         try:
@@ -65,6 +69,7 @@ class WebCrawler:
             print(f'failed to find items => {ex}')
         return False
 
+    # returns true if an item could be filled with the passed content using the passed by_identifier_dict
     def fill_item_by(self, content: str, **by_identifier_dict) -> bool:
         print(f'fill_item_by -> ({content})')
         try:
@@ -75,6 +80,7 @@ class WebCrawler:
             print(f'failed to fill item with \"{content}\" => {ex}')
         return False
 
+    # returns true if an item could be clicked using the passed by_identifier_dict
     def click_item_by(self, use_js_click: bool = False, **by_identifier_dict) -> bool:
         print(f'click_item_by -> ("use_js_click="{use_js_click})')
         try:
@@ -89,6 +95,7 @@ class WebCrawler:
             print(f'failed to click item => {ex}')
         return False
 
+    # returns true if an item could be found using the passed by_identifier_dict
     def get_attributes_by(self,  attribute: str, validator, **by_identifier_dict) -> list:
         print(f'get_attributes_by -> ({by_identifier_dict}, {attribute})')
         try:
@@ -99,6 +106,7 @@ class WebCrawler:
             print(f'failed to get attributes \"{attribute}\" => {ex}')
         return []
 
+    # tries to get a selenium webelement using the passed by_identifier_dict, returns false on failure
     def get_item_by(self, by_identifier_dict: dict):
         print(f'get_item_by -> ({by_identifier_dict})')
         try:
@@ -114,6 +122,7 @@ class WebCrawler:
             print(f'failed in iteration {iterations} to find item by {by_identifier_dict} => {ex}')
         return False
 
+    # tries to get a list of selenium webelements using the passed by_identifier_dict, returns false on failure
     def get_items_by(self, by_identifier_dict: dict):
         print(f'get_items_by -> ({by_identifier_dict})')
         try:
@@ -123,16 +132,16 @@ class WebCrawler:
                 iterations += 1
                 if iterations > 1:
                     if iterations == last_iteration:    # other steps on dict with 1 item
-                        item = item.find_elements(by_identifier[0], by_identifier[1])
-                        return item
+                        items = items.find_elements(by_identifier[0], by_identifier[1])
+                        return items
                     else:                               # other steps on dict with n items
-                        item = item.find_element(by_identifier[0], by_identifier[1])
+                        items = items.find_element(by_identifier[0], by_identifier[1])
                 else:
                     if iterations == last_iteration:    # first step on dict with 1 item
-                        item = self.driver.find_elements(by_identifier[0], by_identifier[1])
-                        return item
+                        items = self.driver.find_elements(by_identifier[0], by_identifier[1])
+                        return items
                     else:                               # first step on dict with n items
-                        item = self.driver.find_element(by_identifier[0], by_identifier[1])
+                        items = self.driver.find_element(by_identifier[0], by_identifier[1])
         except Exception as ex:
             print(f'failed in iteration {iterations} to find items by {by_identifier_dict} => {ex}')
         return False
