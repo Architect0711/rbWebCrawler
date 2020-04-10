@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5a79386-9cb5-485d-aaaa-26c24a9b5a51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rbWebCrawler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rbWebCrawler.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebCrawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/WebCrawler.py" afterDir="false" />
     </list>
@@ -35,7 +32,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
@@ -43,7 +40,7 @@
       <recent name="E:\Develop\Python\10_Work\rbBandcampCrawler" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.WebCrawler">
     <configuration name="WebCrawler" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rbWebCrawler" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -229,10 +226,10 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state width="1245" height="466" key="DebuggerActiveHint/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1586008193414" />
-    <state x="740" y="336" key="FileChooserDialogImpl" timestamp="1586009819867">
+    <state x="740" y="336" key="FileChooserDialogImpl" timestamp="1586529322937">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="740" y="336" key="FileChooserDialogImpl/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1586009819867" />
+    <state x="740" y="336" key="FileChooserDialogImpl/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1586529322937" />
     <state width="958" height="1105" key="GridCell.Tab.0.bottom" timestamp="1586012164800">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
@@ -273,6 +270,10 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state width="968" height="588" key="XDebugger.FullValuePopup/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1585266742654" />
+    <state x="656" y="405" key="com.intellij.ide.util.TipDialog" timestamp="1586529305930">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="656" y="405" key="com.intellij.ide.util.TipDialog/0.0.1920.1160/1920.0.1920.1160@0.0.1920.1160" timestamp="1586529305930" />
     <state x="531" y="317" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1585264085641">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
