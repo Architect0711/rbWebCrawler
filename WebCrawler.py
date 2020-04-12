@@ -103,6 +103,15 @@ class WebCrawler:
             print(f'failed to fill item with \"{content}\" => {ex}')
         return False
 
+    def get_item_text_by(self, **by_identifier_dict) -> bool:
+        print(f'get_item_text_by')
+        try:
+            item = self.get_item_by(by_identifier_dict)
+            return item.text
+        except Exception as ex:
+            print(f'failed to get item text => {ex}')
+        return False
+
     # returns true if an item could be clicked using the passed by_identifier_dict
     def click_item_by(self, use_js_click: bool = False, **by_identifier_dict) -> bool:
         print(f'click_item_by -> ("use_js_click="{use_js_click})')
