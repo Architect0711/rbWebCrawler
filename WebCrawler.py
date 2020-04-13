@@ -103,10 +103,11 @@ class WebCrawler:
             print(f'failed to fill item with \"{content}\" => {ex}')
         return False
 
+    # returns the text if an item with text could be found using the passed by_identifier_dict
     def get_item_text_by(self, **by_identifier_dict) -> bool:
         print(f'get_item_text_by')
         try:
-            item = self.get_item_by(by_identifier_dict)
+            item = self.__get_item_by(by_identifier_dict)
             return item.text
         except Exception as ex:
             print(f'failed to get item text => {ex}')
