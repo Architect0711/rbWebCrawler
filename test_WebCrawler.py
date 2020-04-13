@@ -8,6 +8,7 @@ import os
 # https://docs.python.org/2/library/unittest.html#
 
 
+# https://selenium-python.readthedocs.io/locating-elements.html
 class TestWebCrawler(TestCase):
     def setUp(self):
         webdriver_options = webdriver.chrome.options.Options()
@@ -29,16 +30,6 @@ class TestOpenUrl(TestWebCrawler):
         self.assertEqual(self.crawler.driver.title, "MyFirstUnitTestInPython")
 
 
-# ID = "id"
-# XPATH = "xpath"
-# LINK_TEXT = "link text"
-# PARTIAL_LINK_TEXT = "partial link text"
-# NAME = "name"
-# TAG_NAME = "tag name"
-# CLASS_NAME = "class name"
-# CSS_SELECTOR = "css selector"
-
-# https://selenium-python.readthedocs.io/locating-elements.html
 class TestFindItemBy(TestWebCrawler):
     def test_find_item_by_id_ok(self):
         self.assertTrue(self.crawler.find_item_by(item=["id", "list_item_0001"]))
@@ -175,6 +166,58 @@ class TestFillItemBy(TestWebCrawler):
 
     def test_fill_item_by_css_selector_nok(self):
         self.assertFalse(self.crawler.fill_item_by(item=["css selector", "input.address"], content="test"))
+
+
+class TestGetItemTextBy(TestWebCrawler):
+    def test_get_item_text_by_id_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["id", "list_item_0001"]))
+
+    def test_get_item_text_by_id_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["id", "not_in_my_html"]))
+
+    def test_get_item_text_by_xpath_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(
+            item=["xpath", "//button[contains(@data-user-id, '0001') and contains(.//div, 'Follow')]"]))
+
+    def test_get_item_text_by_xpath_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(
+            item=["xpath", "//button[contains(@data-user-id, '0011') and contains(.//div, 'Follow')]"]))
+
+    def test_get_item_text_by_link_text_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["link text", "user_0001"]))
+
+    def test_get_item_text_by_link_text_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["link text", "user_0011"]))
+
+    def test_get_item_text_by_partial_link_text_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["partial link text", "0001"]))
+
+    def test_get_item_text_by_partial_link_text_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["partial link text", "0011"]))
+
+    def test_get_item_text_by_name_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["name", "follower-list"]))
+
+    def test_get_item_text_by_name_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["name", "following-list"]))
+
+    def test_get_item_text_by_tag_name_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["tag name", "ol"]))
+
+    def test_get_item_text_by_tag_name_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["tag name", "h1"]))
+
+    def test_get_item_text_by_class_name_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["class name", "some-info"]))
+
+    def test_get_item_text_by_class_name_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["class name", "some-more-info"]))
+
+    def test_get_item_text_by_css_selector_ok(self):
+        self.assertTrue(self.crawler.get_item_text_by(item=["css selector", "div.user-location"]))
+
+    def test_get_item_text_by_css_selector_nok(self):
+        self.assertFalse(self.crawler.get_item_text_by(item=["css selector", "span.follow-the-white-rabbit"]))
 
 
 class TestClickItemBy(TestWebCrawler):
@@ -324,16 +367,116 @@ class TestGetAttributesBy(TestWebCrawler):
             validator=lambda attr: attr is not None,
             item=["css selector", "a.another-username"]))
 
-    """        
-class TestScrollToBottom(TestWebCrawler):
+
+class TestGetItemBy(TestWebCrawler):
+    def test_get_item_by_id_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["id", "list_item_0001"]))
+
+    def test_get_item_by_id_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["id", "not_in_my_html"]))
+
+    def test_get_item_by_xpath_ok(self):
+        self.assertTrue(self.crawler.get_item_by(
+            item=["xpath", "//button[contains(@data-user-id, '0001') and contains(.//div, 'Follow')]"]))
+
+    def test_get_item_by_xpath_nok(self):
+        self.assertFalse(self.crawler.get_item_by(
+            item=["xpath", "//button[contains(@data-user-id, '0011') and contains(.//div, 'Follow')]"]))
+
+    def test_get_item_by_link_text_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["link text", "user_0001"]))
+
+    def test_get_item_by_link_text_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["link text", "user_0011"]))
+
+    def test_get_item_by_partial_link_text_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["partial link text", "0001"]))
+
+    def test_get_item_by_partial_link_text_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["partial link text", "0011"]))
+
+    def test_get_item_by_name_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["name", "follower-list"]))
+
+    def test_get_item_by_name_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["name", "following-list"]))
+
+    def test_get_item_by_tag_name_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["tag name", "ol"]))
+
+    def test_get_item_by_tag_name_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["tag name", "h1"]))
+
+    def test_get_item_by_class_name_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["class name", "some-info"]))
+
+    def test_get_item_by_class_name_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["class name", "some-more-info"]))
+
+    def test_get_item_by_css_selector_ok(self):
+        self.assertTrue(self.crawler.get_item_by(item=["css selector", "span.follow"]))
+
+    def test_get_item_by_css_selector_nok(self):
+        self.assertFalse(self.crawler.get_item_by(item=["css selector", "span.follow-the-white-rabbit"]))
+
+
+class TestGetItemsBy(TestWebCrawler):
+    def test_get_items_by_id_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["id", "list_item_0001"]))
+
+    def test_get_items_by_id_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["id", "not_in_my_html"]))
+
+    def test_get_items_by_xpath_ok(self):
+        self.assertTrue(self.crawler.get_items_by(
+            item=["xpath", "//button[contains(@data-user-id, '0001') and contains(.//div, 'Follow')]"]))
+
+    def test_get_items_by_xpath_nok(self):
+        self.assertFalse(self.crawler.get_items_by(
+            item=["xpath", "//button[contains(@data-user-id, '0011') and contains(.//div, 'Follow')]"]))
+
+    def test_get_items_by_link_text_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["link text", "user_0001"]))
+
+    def test_get_items_by_link_text_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["link text", "user_0011"]))
+
+    def test_get_items_by_partial_link_text_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["partial link text", "0001"]))
+
+    def test_get_items_by_partial_link_text_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["partial link text", "0011"]))
+
+    def test_get_items_by_name_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["name", "follower-list"]))
+
+    def test_get_items_by_name_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["name", "following-list"]))
+
+    def test_get_items_by_tag_name_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["tag name", "ol"]))
+
+    def test_get_items_by_tag_name_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["tag name", "h1"]))
+
+    def test_get_items_by_class_name_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["class name", "some-info"]))
+
+    def test_get_items_by_class_name_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["class name", "some-more-info"]))
+
+    def test_get_items_by_css_selector_ok(self):
+        self.assertTrue(self.crawler.get_items_by(item=["css selector", "span.follow"]))
+
+    def test_get_items_by_css_selector_nok(self):
+        self.assertFalse(self.crawler.get_items_by(item=["css selector", "span.follow-the-white-rabbit"]))
+
+
+class TestScrollToBottomBy(TestWebCrawler):
     def test_scroll_to_bottom_by(self):
         self.fail()
 
-class TestGetItemBy(TestWebCrawler):
-    def test_get_item_by(self):
-        self.fail()
 
-class TestGetItemsBy(TestWebCrawler):
-    def test_get_items_by(self):
+class TestScrollToBottomAndBackUpBy(TestWebCrawler):
+    def scroll_to_bottom_and_back_up_by(self):
         self.fail()
-    """
