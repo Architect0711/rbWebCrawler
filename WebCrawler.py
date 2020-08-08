@@ -30,14 +30,16 @@ class WebCrawler:
         if load_time > 0:
             sleep(load_time)
 
+
     # returns true if the bottom of the scrollbox selected using the passed by_identifier_dict was reached
-    def scroll_to_bottom_by(self, reload_time: float = 1, **by_identifier_dict) -> bool:
+    def scroll_to_bottom_by(self, reload_time: float = 1, scroll_limit: int = 0, **by_identifier_dict) -> bool:
         print(type(by_identifier_dict))
-        print(f'scroll_to_bottom_by -> (reload_time={reload_time})')
+        print(f'scroll_to_bottom_by -> (reload_time={reload_time}, scroll_limit={scroll_limit})')
+        scrolls: int = 0
         try:
             scroll_box = self.__get_item_by(by_identifier_dict)
             last_height, current_height = 0, 1
-            while last_height != current_height:
+            while (last_height != current_height):
                 last_height = current_height
                 if reload_time > 0 and last_height > 0:
                     sleep(reload_time)
@@ -45,14 +47,20 @@ class WebCrawler:
                 arguments[0].scrollTo(0, arguments[0].scrollHeight);
                 return arguments[0].scrollHeight;
                 """, scroll_box)
+                scrolls += 1
+                if scroll_limit > 0 and (scrolls >= scroll_limit):
+                    print(f'scrolled {scrolls} times, scroll_limit ({scroll_limit}) reached')
+                    break;
         except Exception as ex:
             print(f'failed to scroll to bottom => {ex}')
-        return False
+            return False
+        return True
 
     # scrolls down and then a bit up again - sometimes required to get sites to load
-    def scroll_to_bottom_and_back_up_by(self, reload_time: float = 1, position: float = 0.5, **by_identifier_dict) -> bool:
+    def scroll_to_bottom_and_back_up_by(self, reload_time: float = 1, scroll_limit: int = 0, position: float = 0.5, **by_identifier_dict) -> bool:
         print(type(by_identifier_dict))
-        print(f'scroll_to_position_by -> (reload_time={reload_time})')
+        print(f'scroll_to_position_by -> (reload_time={reload_time}, scroll_limit={scroll_limit}, position={position})')
+        scrolls: int = 0
         try:
             scroll_box = self.__get_item_by(by_identifier_dict)
             last_height, current_height = 0, 1
@@ -68,9 +76,15 @@ class WebCrawler:
                                 arguments[0].scrollTo(0, arguments[1]);
                                 return arguments[0].scrollHeight;
                                 """, scroll_box, current_height * position)
+                scrolls += 1
+                if scroll_limit > 0 and (scrolls >= scroll_limit):
+                    print(f'scrolled {scrolls} times, scroll_limit ({scroll_limit}) reached')
+                    break;
         except Exception as ex:
             print(f'failed to scroll to position {position} => {ex}')
-        return False
+            return False
+        return True
+
 
     # returns true if an item could be found using the passed by_identifier_dict
     def find_item_by(self, **by_identifier_dict) -> bool:
